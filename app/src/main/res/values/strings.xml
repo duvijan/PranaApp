@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">PranaApp</string>
+    
+    <!-- Auth Strings -->
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="login_success">Login successful</string>
+    <string name="login_failed">Login failed</string>
+    <string name="register_success">Registration successful</string>
+    <string name="register_failed">Registration failed</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="invalid_email">Invalid email format</string>
+    <string name="password_too_short">Password must be at least 6 characters</string>
+    
+    <!-- Breathing Timer Strings -->
+    <string name="inhale">Inhale</string>
+    <string name="hold">Hold</string>
+    <string name="exhale">Exhale</string>
+    <string name="silence">Silence</string>
+    <string name="start">Start</string>
+    <string name="stop">Stop</string>
+    <string name="duration_seconds">Duration (seconds)</string>
+    <string name="invalid_input">Please enter a valid number</string>
+    <string name="breathing_timer">Breathing Timer</string>
+    <string name="current_stage">Current Stage: %1$s</string>
+    <string name="remaining_time">%1$d seconds</string>
+    
+    <!-- Peace Movement Strings -->
+    <string name="peace_movement">Peace Movement</string>
+    <string name="peace_meditation_prompt">It\'s time for #1minPeaceMeditation!</string>
+    <string name="i_am_peacekeeper">I am a peacekeeper</string>
+    <string name="join_peace_movement">Join Peace Movement</string>
+    <string name="peace_movement_thanks">Thank you for joining the Peace Movement!</string>
+    <string name="peace_movement_count">%1$d peacekeepers have joined</string>
+</resources>
