@@ -70,7 +70,7 @@ class PeaceMeditationWorker(
         
         // Build notification
         val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_notification)
+            .setSmallIcon(R.drawable.ic_peace_notification)
             .setContentTitle(context.getString(R.string.peace_movement))
             .setContentText(context.getString(R.string.peace_meditation_prompt))
             .setPriority(NotificationCompat.PRIORITY_HIGH)
