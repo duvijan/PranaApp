@@ -11,6 +11,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.duvijan.pranaapp.R
 
 @Composable
@@ -26,15 +27,17 @@ fun RegisterScreen(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     
     // Observe registration state
-    LaunchedEffect(viewModel.authState.value) {
-        when (val state = viewModel.authState.value) {
+    val authState by viewModel.authState.collectAsStateWithLifecycle()
+    
+    LaunchedEffect(authState) {
+        when (authState) {
             is AuthState.Success -> {
                 isLoading = false
                 onRegisterSuccess()
             }
             is AuthState.Error -> {
                 isLoading = false
-                errorMessage = state.message
+                errorMessage = (authState as AuthState.Error).message
             }
             is AuthState.Loading -> {
                 isLoading = true
