@@ -2,7 +2,8 @@
 buildscript {
     ext {
         compose_version = '1.4.3'
-        kotlin_version = '1.8.10'
+        //kotlin_version = '1.8.10'
+        kotlin_version = '1.9.24'
         java_version = JavaVersion.VERSION_17
     }
     repositories {

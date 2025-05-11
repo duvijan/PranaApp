@@ -117,17 +117,17 @@
 65        </provider>
 66
 67        <activity
-67-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\0f533f0916ae8c0c1cce39fb0130a4c1\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:23:9-25:39
-68            android:name="androidx.activity.ComponentActivity"
-68-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\0f533f0916ae8c0c1cce39fb0130a4c1\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:24:13-63
+67-->[androidx.compose.ui:ui-tooling-android:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\c62923c9753c346ed969a6d55b517377\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+68            android:name="androidx.compose.ui.tooling.PreviewActivity"
+68-->[androidx.compose.ui:ui-tooling-android:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\c62923c9753c346ed969a6d55b517377\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
 69            android:exported="true" />
-69-->[androidx.compose.ui:ui-test-manifest:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\0f533f0916ae8c0c1cce39fb0130a4c1\transformed\ui-test-manifest-1.6.0\AndroidManifest.xml:25:13-36
+69-->[androidx.compose.ui:ui-tooling-android:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\c62923c9753c346ed969a6d55b517377\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
 70        <activity
-70-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\40788e77063ae94ce5ca362b0a18db04\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
-71            android:name="androidx.compose.ui.tooling.PreviewActivity"
-71-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\40788e77063ae94ce5ca362b0a18db04\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+70-->[androidx.compose.ui:ui-test-manifest:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\945c3b9f01cb105b5e8ad530b5a64ddc\transformed\ui-test-manifest-1.6.7\AndroidManifest.xml:23:9-25:39
+71            android:name="androidx.activity.ComponentActivity"
+71-->[androidx.compose.ui:ui-test-manifest:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\945c3b9f01cb105b5e8ad530b5a64ddc\transformed\ui-test-manifest-1.6.7\AndroidManifest.xml:24:13-63
 72            android:exported="true" />
-72-->[androidx.compose.ui:ui-tooling-android:1.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\40788e77063ae94ce5ca362b0a18db04\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+72-->[androidx.compose.ui:ui-test-manifest:1.6.7] C:\Users\srudr\.gradle\caches\8.12\transforms\945c3b9f01cb105b5e8ad530b5a64ddc\transformed\ui-test-manifest-1.6.7\AndroidManifest.xml:25:13-36
 73        <activity
 73-->[com.google.android.gms:play-services-auth:20.6.0] C:\Users\srudr\.gradle\caches\8.12\transforms\9a6a2b9d52bef0b87dab2649ef0284db\transformed\play-services-auth-20.6.0\AndroidManifest.xml:23:9-27:75
 74            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
