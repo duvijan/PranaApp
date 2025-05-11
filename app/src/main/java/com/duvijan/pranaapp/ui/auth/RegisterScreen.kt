@@ -108,13 +108,15 @@ fun RegisterScreen(
                 modifier = Modifier.padding(vertical = 8.dp)
             )
         }
-        
+        val passwordMismatchError = stringResource(R.string.passwords_dont_match)
+        val passwordTooShortError = stringResource(R.string.password_too_short)
+
         Button(
             onClick = {
                 if (password != confirmPassword) {
-                    errorMessage = stringResource(R.string.passwords_dont_match)
+                    errorMessage = passwordMismatchError
                 } else if (password.length < 6) {
-                    errorMessage = stringResource(R.string.password_too_short)
+                    errorMessage = passwordTooShortError
                 } else {
                     viewModel.register(email, password)
                 }
