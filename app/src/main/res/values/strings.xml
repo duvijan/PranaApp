@@ -27,6 +27,20 @@
     <string name="breathing_timer">Breathing Timer</string>
     <string name="current_stage">Current Stage: %1$s</string>
     <string name="remaining_time">%1$d seconds</string>
+    <string name="current_count">Count: %1$d</string>
+    <string name="cycle_count">Cycle: %1$d</string>
+    
+    <!-- Breathing Settings Strings -->
+    <string name="breathing_settings">Breathing Settings</string>
+    <string name="base_count">Base Count (counts per phase)</string>
+    <string name="breathing_cycles">Breathing Cycles</string>
+    <string name="practice_duration">Practice Duration (minutes)</string>
+    <string name="voice_guidance">Voice Guidance</string>
+    <string name="voice_speed">Voice Speed</string>
+    <string name="slow">Slow</string>
+    <string name="normal">Normal</string>
+    <string name="fast">Fast</string>
+    <string name="save_settings">Save Settings</string>
     
     <!-- Peace Movement Strings -->
     <string name="peace_movement">Peace Movement</string>

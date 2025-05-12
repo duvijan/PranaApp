@@ -15,6 +15,7 @@ import androidx.navigation.compose.rememberNavController
 import com.duvijan.pranaapp.ui.auth.LoginScreen
 import com.duvijan.pranaapp.ui.auth.RegisterScreen
 import com.duvijan.pranaapp.ui.breathing.BreathingScreen
+import com.duvijan.pranaapp.ui.breathing.BreathingSettingsScreen
 import com.duvijan.pranaapp.ui.peace.PeaceMovementScreen
 import com.duvijan.pranaapp.ui.theme.PranaAppTheme
 import com.duvijan.pranaapp.util.AnalyticsManager
@@ -105,11 +106,22 @@ fun AppNavHost(
                 onPeaceMovementClick = {
                     navController.navigate("peace_movement")
                 },
+                onSettingsClick = {
+                    navController.navigate("breathing_settings")
+                },
                 onLogout = {
                     AnalyticsManager.logLogout()
                     navController.navigate("login") {
                         popUpTo("breathing") { inclusive = true }
                     }
+                }
+            )
+        }
+        
+        composable("breathing_settings") {
+            BreathingSettingsScreen(
+                onBackClick = {
+                    navController.popBackStack()
                 }
             )
         }

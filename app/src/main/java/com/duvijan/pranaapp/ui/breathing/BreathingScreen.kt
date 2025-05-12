@@ -6,29 +6,41 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.duvijan.pranaapp.R
 import com.duvijan.pranaapp.model.BreathingStage
 
 @Composable
 fun BreathingScreen(
     onPeaceMovementClick: () -> Unit,
+    onSettingsClick: () -> Unit,
     onLogout: () -> Unit,
     viewModel: BreathingViewModel = viewModel()
 ) {
-    val inhaleDuration by viewModel.inhaleDuration.collectAsState()
-    val holdDuration by viewModel.holdDuration.collectAsState()
-    val exhaleDuration by viewModel.exhaleDuration.collectAsState()
-    val silenceDuration by viewModel.silenceDuration.collectAsState()
+    val context = LocalContext.current
+    val inhaleDuration by viewModel.inhaleDuration.collectAsStateWithLifecycle()
+    val holdDuration by viewModel.holdDuration.collectAsStateWithLifecycle()
+    val exhaleDuration by viewModel.exhaleDuration.collectAsStateWithLifecycle()
+    val silenceDuration by viewModel.silenceDuration.collectAsStateWithLifecycle()
     
-    val isRunning by viewModel.isRunning.collectAsState()
-    val currentStage by viewModel.currentStage.collectAsState()
-    val remainingSeconds by viewModel.remainingSeconds.collectAsState()
+    val isRunning by viewModel.isRunning.collectAsStateWithLifecycle()
+    val currentStage by viewModel.currentStage.collectAsStateWithLifecycle()
+    val remainingSeconds by viewModel.remainingSeconds.collectAsStateWithLifecycle()
+    val currentCount by viewModel.currentCount.collectAsStateWithLifecycle()
+    val totalCountInCycle by viewModel.totalCountInCycle.collectAsStateWithLifecycle()
+    val cycleCount by viewModel.cycleCount.collectAsStateWithLifecycle()
+    
+    // Initialize TTS when the screen is created
+    LaunchedEffect(Unit) {
+        viewModel.initializeTTS(context)
+    }
     
     Column(
         modifier = Modifier
@@ -46,6 +58,11 @@ fun BreathingScreen(
             )
             
             Row {
+                IconButton(onClick = onSettingsClick) {
+                    // Settings icon
+                    Text("⚙️", style = MaterialTheme.typography.headlineMedium)
+                }
+                
                 TextButton(onClick = onPeaceMovementClick) {
                     Text(stringResource(R.string.peace_movement))
                 }
@@ -60,7 +77,13 @@ fun BreathingScreen(
         
         // Timer display
         if (isRunning) {
-            TimerDisplay(currentStage, remainingSeconds)
+            TimerDisplay(
+                currentStage = currentStage,
+                remainingSeconds = remainingSeconds,
+                currentCount = currentCount,
+                totalCountInCycle = totalCountInCycle,
+                cycleCount = cycleCount
+            )
         }
         
         Spacer(modifier = Modifier.height(32.dp))
@@ -98,7 +121,13 @@ fun BreathingScreen(
 }
 
 @Composable
-fun TimerDisplay(currentStage: BreathingStage, remainingSeconds: Int) {
+fun TimerDisplay(
+    currentStage: BreathingStage,
+    remainingSeconds: Int,
+    currentCount: Int,
+    totalCountInCycle: Int,
+    cycleCount: Int
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,6 +145,22 @@ fun TimerDisplay(currentStage: BreathingStage, remainingSeconds: Int) {
         Text(
             text = stringResource(R.string.remaining_time, remainingSeconds),
             style = MaterialTheme.typography.displayLarge,
+            textAlign = TextAlign.Center
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Text(
+            text = stringResource(R.string.current_count, currentCount),
+            style = MaterialTheme.typography.headlineSmall,
+            textAlign = TextAlign.Center
+        )
+        
+        Spacer(modifier = Modifier.height(8.dp))
+        
+        Text(
+            text = stringResource(R.string.cycle_count, cycleCount),
+            style = MaterialTheme.typography.bodyLarge,
             textAlign = TextAlign.Center
         )
     }
