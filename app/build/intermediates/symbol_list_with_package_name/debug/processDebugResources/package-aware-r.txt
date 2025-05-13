@@ -216,6 +216,7 @@ id fill
 id fill_horizontal
 id fill_vertical
 id forever
+id hide_graphics_layer_in_inspector_tag
 id hide_ime_id
 id hide_in_inspector_tag
 id icon
@@ -287,6 +288,9 @@ mipmap ic_launcher_round
 raw firebase_common_keep
 string androidx_startup
 string app_name
+string base_count
+string breathing_cycles
+string breathing_settings
 string breathing_timer
 string call_notification_answer_action
 string call_notification_answer_video_action
@@ -317,7 +321,9 @@ string common_signin_button_text
 string common_signin_button_text_long
 string confirm_password
 string copy_toast_msg
+string current_count
 string current_stage
+string cycle_count
 string default_error_message
 string default_popup_window_title
 string dropdown_menu
@@ -327,6 +333,7 @@ string exhale
 string fallback_menu_item_copy_link
 string fallback_menu_item_open_in_browser
 string fallback_menu_item_share_link
+string fast
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
@@ -400,9 +407,8 @@ string m3c_time_picker_pm
 string m3c_tooltip_long_press_label
 string m3c_tooltip_pane_description
 string navigation_menu
+string normal
 string not_selected
-string off
-string on
 string password
 string password_too_short
 string passwords_dont_match
@@ -410,6 +416,7 @@ string peace_meditation_prompt
 string peace_movement
 string peace_movement_count
 string peace_movement_thanks
+string practice_duration
 string project_id
 string range_end
 string range_start
@@ -417,9 +424,14 @@ string register
 string register_failed
 string register_success
 string remaining_time
+string save_settings
 string selected
 string silence
+string slow
 string start
+string state_empty
+string state_off
+string state_on
 string status_bar_notification_info_overflow
 string stop
 string switch_role
@@ -427,6 +439,8 @@ string tab
 string template_percent
 string tooltip_description
 string tooltip_label
+string voice_guidance
+string voice_speed
 style DialogWindowTheme
 style FloatingDialogTheme
 style FloatingDialogWindowTheme

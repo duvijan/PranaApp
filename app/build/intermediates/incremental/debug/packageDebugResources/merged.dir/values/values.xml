@@ -2,12 +2,18 @@
 <resources>
     <color name="ic_launcher_background">#FFFFFF</color>
     <string name="app_name">PranaApp</string>
+    <string name="base_count">Base Count (counts per phase)</string>
+    <string name="breathing_cycles">Breathing Cycles</string>
+    <string name="breathing_settings">Breathing Settings</string>
     <string name="breathing_timer">Breathing Timer</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="current_count">Count: %1$d</string>
     <string name="current_stage">Current Stage: %1$s</string>
+    <string name="cycle_count">Cycle: %1$d</string>
     <string name="duration_seconds">Duration (seconds)</string>
     <string name="email">Email</string>
     <string name="exhale">Exhale</string>
+    <string name="fast">Fast</string>
     <string name="gcm_defaultSenderId" translatable="false">376063354282</string>
     <string name="google_api_key" translatable="false">AIzaSyA2ymxg38JGszHZkBWrnaYaIiZu89HDln4</string>
     <string name="google_app_id" translatable="false">1:376063354282:android:10ce65b3798841fe5cf7d3</string>
@@ -22,6 +28,7 @@
     <string name="login">Login</string>
     <string name="login_failed">Login failed</string>
     <string name="login_success">Login successful</string>
+    <string name="normal">Normal</string>
     <string name="password">Password</string>
     <string name="password_too_short">Password must be at least 6 characters</string>
     <string name="passwords_dont_match">Passwords don\'t match</string>
@@ -29,13 +36,18 @@
     <string name="peace_movement">Peace Movement</string>
     <string name="peace_movement_count">%1$d peacekeepers have joined</string>
     <string name="peace_movement_thanks">Thank you for joining the Peace Movement!</string>
+    <string name="practice_duration">Practice Duration (minutes)</string>
     <string name="project_id" translatable="false">pranaapp-48409</string>
     <string name="register">Register</string>
     <string name="register_failed">Registration failed</string>
     <string name="register_success">Registration successful</string>
     <string name="remaining_time">%1$d seconds</string>
+    <string name="save_settings">Save Settings</string>
     <string name="silence">Silence</string>
+    <string name="slow">Slow</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="voice_guidance">Voice Guidance</string>
+    <string name="voice_speed">Voice Speed</string>
     <style name="Theme.PranaApp" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>
