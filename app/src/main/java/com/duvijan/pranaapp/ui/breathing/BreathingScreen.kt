@@ -1,21 +1,27 @@
 package com.duvijan.pranaapp.ui.breathing
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.duvijan.pranaapp.R
 import com.duvijan.pranaapp.model.BreathingStage
+import com.duvijan.pranaapp.ui.components.CircularTimer
+import com.duvijan.pranaapp.ui.components.BreathingPhaseIndicator
+import com.duvijan.pranaapp.ui.components.VoiceControlSlider
+import com.duvijan.pranaapp.ui.components.GradientButton
 
 @Composable
 fun BreathingScreen(
@@ -37,132 +43,141 @@ fun BreathingScreen(
     val totalCountInCycle by viewModel.totalCountInCycle.collectAsStateWithLifecycle()
     val cycleCount by viewModel.cycleCount.collectAsStateWithLifecycle()
     
+    // Calculate progress for circular timer
+    val totalDuration = when (currentStage) {
+        BreathingStage.INHALE -> inhaleDuration.toIntOrNull() ?: 4
+        BreathingStage.HOLD -> holdDuration.toIntOrNull() ?: 4
+        BreathingStage.EXHALE -> exhaleDuration.toIntOrNull() ?: 4
+        BreathingStage.SILENCE -> silenceDuration.toIntOrNull() ?: 4
+    }
+    val progress = 1f - (remainingSeconds.toFloat() / totalDuration.toFloat()).coerceIn(0f, 1f)
+    
+    // Voice control value
+    var voiceControlValue by remember { mutableStateOf(0.5f) }
+    
     // Initialize TTS when the screen is created
     LaunchedEffect(Unit) {
         viewModel.initializeTTS(context)
     }
     
-    Column(
+    Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .background(Color(0xFF121212))
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = stringResource(R.string.app_name),
-                style = MaterialTheme.typography.headlineMedium
-            )
-            
-            Row {
+            // Top bar
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Left - Settings icon
                 IconButton(onClick = onSettingsClick) {
-                    // Settings icon
-                    Text("⚙️", style = MaterialTheme.typography.headlineMedium)
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_menu_preferences),
+                        contentDescription = "Settings",
+                        tint = Color.White
+                    )
                 }
                 
-                TextButton(onClick = onPeaceMovementClick) {
-                    Text(stringResource(R.string.peace_movement))
-                }
+                // Center - App name or current screen title
+                Text(
+                    text = if (isRunning) "Timing" else "Sence",
+                    style = MaterialTheme.typography.headlineMedium,
+                    color = Color.White
+                )
                 
-                TextButton(onClick = onLogout) {
-                    Text(stringResource(R.string.login))
+                // Right - Menu icon
+                IconButton(onClick = onPeaceMovementClick) {
+                    Icon(
+                        painter = painterResource(id = android.R.drawable.ic_menu_more),
+                        contentDescription = "Menu",
+                        tint = Color.White
+                    )
                 }
             }
+            
+            Spacer(modifier = Modifier.height(24.dp))
+            
+            if (isRunning) {
+                // Circular timer with current state
+                CircularTimer(
+                    currentStage = currentStage,
+                    remainingSeconds = remainingSeconds,
+                    currentCount = currentCount,
+                    totalCountInCycle = totalCountInCycle,
+                    cycleCount = cycleCount,
+                    progress = progress,
+                    modifier = Modifier.weight(1f)
+                )
+                
+                // Breathing phase indicators
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    BreathingStage.values().forEach { stage ->
+                        BreathingPhaseIndicator(
+                            stage = stage,
+                            isActive = stage == currentStage
+                        )
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                // Voice control slider
+                VoiceControlSlider(
+                    value = voiceControlValue,
+                    onValueChange = { 
+                        voiceControlValue = it 
+                        viewModel.setVoiceSpeed(0.5f + it)
+                    }
+                )
+                
+                Spacer(modifier = Modifier.height(24.dp))
+                
+                // Stop button
+                GradientButton(
+                    text = stringResource(R.string.stop),
+                    onClick = { viewModel.toggleTimer() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                )
+            } else {
+                // Settings screen UI
+                DurationInputs(
+                    inhaleDuration = inhaleDuration,
+                    holdDuration = holdDuration,
+                    exhaleDuration = exhaleDuration,
+                    silenceDuration = silenceDuration,
+                    onInhaleChange = viewModel::updateInhaleDuration,
+                    onHoldChange = viewModel::updateHoldDuration,
+                    onExhaleChange = viewModel::updateExhaleDuration,
+                    onSilenceChange = viewModel::updateSilenceDuration
+                )
+                
+                Spacer(modifier = Modifier.weight(1f))
+                
+                // Start button
+                GradientButton(
+                    text = stringResource(R.string.start_practice),
+                    onClick = { viewModel.toggleTimer() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                )
+            }
         }
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Timer display
-        if (isRunning) {
-            TimerDisplay(
-                currentStage = currentStage,
-                remainingSeconds = remainingSeconds,
-                currentCount = currentCount,
-                totalCountInCycle = totalCountInCycle,
-                cycleCount = cycleCount
-            )
-        }
-        
-        Spacer(modifier = Modifier.height(32.dp))
-        
-        // Duration inputs
-        if (!isRunning) {
-            DurationInputs(
-                inhaleDuration = inhaleDuration,
-                holdDuration = holdDuration,
-                exhaleDuration = exhaleDuration,
-                silenceDuration = silenceDuration,
-                onInhaleChange = viewModel::updateInhaleDuration,
-                onHoldChange = viewModel::updateHoldDuration,
-                onExhaleChange = viewModel::updateExhaleDuration,
-                onSilenceChange = viewModel::updateSilenceDuration
-            )
-        }
-        
-        Spacer(modifier = Modifier.weight(1f))
-        
-        // Start/Stop button
-        Button(
-            onClick = { viewModel.toggleTimer() },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .height(56.dp)
-        ) {
-            Text(
-                text = stringResource(if (isRunning) R.string.stop else R.string.start),
-                fontSize = 18.sp
-            )
-        }
-    }
-}
-
-@Composable
-fun TimerDisplay(
-    currentStage: BreathingStage,
-    remainingSeconds: Int,
-    currentCount: Int,
-    totalCountInCycle: Int,
-    cycleCount: Int
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = stringResource(R.string.current_stage, currentStage.displayName),
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        Text(
-            text = stringResource(R.string.remaining_time, remainingSeconds),
-            style = MaterialTheme.typography.displayLarge,
-            textAlign = TextAlign.Center
-        )
-        
-        Spacer(modifier = Modifier.height(16.dp))
-        
-        Text(
-            text = stringResource(R.string.current_count, currentCount),
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center
-        )
-        
-        Spacer(modifier = Modifier.height(8.dp))
-        
-        Text(
-            text = stringResource(R.string.cycle_count, cycleCount),
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Center
-        )
     }
 }
 
@@ -184,6 +199,7 @@ fun DurationInputs(
         Text(
             text = stringResource(R.string.breathing_timer),
             style = MaterialTheme.typography.headlineSmall,
+            color = Color.White,
             modifier = Modifier.padding(bottom = 16.dp)
         )
         
@@ -227,6 +243,7 @@ fun DurationInput(
     ) {
         Text(
             text = label,
+            color = Color.White,
             modifier = Modifier.width(80.dp)
         )
         
@@ -236,6 +253,14 @@ fun DurationInput(
             label = { Text(stringResource(R.string.duration_seconds)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFF4AEDB6),
+                unfocusedBorderColor = Color.Gray,
+                focusedLabelColor = Color(0xFF4AEDB6),
+                unfocusedLabelColor = Color.Gray,
+                cursorColor = Color(0xFF4AEDB6),
+                textColor = Color.White
+            ),
             modifier = Modifier.fillMaxWidth()
         )
     }

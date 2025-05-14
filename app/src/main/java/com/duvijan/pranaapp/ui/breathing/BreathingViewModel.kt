@@ -106,6 +106,11 @@ class BreathingViewModel : ViewModel() {
         }
     }
     
+    fun setVoiceSpeed(speed: Float) {
+        voiceSpeed = speed
+        ttsManager?.setSpeechRate(speed)
+    }
+    
     fun toggleTimer() {
         if (_isRunning.value) {
             stopTimer()
