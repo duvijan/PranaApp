@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace 'com.duvijan.pranaapp'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId "com.duvijan.pranaapp"
         minSdk 23
-        targetSdk 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
 
@@ -56,6 +56,7 @@ dependencies {
     
     // Compose dependencies
     implementation(platform("androidx.compose:compose-bom:2024.05.00")) // latest stable BOM
+    implementation("androidx.compose.material:material-icons-extended:1.6.4")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-tooling-preview")

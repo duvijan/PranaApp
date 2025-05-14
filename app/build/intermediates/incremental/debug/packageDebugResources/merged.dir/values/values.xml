@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="dark_background">#121212</color>
+    <color name="dark_surface">#1E1E1E</color>
     <color name="ic_launcher_background">#FFFFFF</color>
+    <color name="teal_primary">#4AEDB6</color>
+    <color name="teal_secondary">#2CCFB0</color>
+    <color name="teal_tertiary">#73F4D6</color>
     <string name="app_name">PranaApp</string>
     <string name="base_count">Base Count (counts per phase)</string>
+    <string name="base_count_label">BASE COUNT</string>
     <string name="breathing_cycles">Breathing Cycles</string>
     <string name="breathing_settings">Breathing Settings</string>
     <string name="breathing_timer">Breathing Timer</string>
+    <string name="configure_ui">CONFIGURE UI</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="current_count">Count: %1$d</string>
     <string name="current_stage">Current Stage: %1$s</string>
@@ -46,7 +53,10 @@
     <string name="silence">Silence</string>
     <string name="slow">Slow</string>
     <string name="start">Start</string>
+    <string name="start_practice">START PRACTICE</string>
     <string name="stop">Stop</string>
+    <string name="tour">TOUR</string>
+    <string name="voice_cycle">Voice cycle</string>
     <string name="voice_guidance">Voice Guidance</string>
     <string name="voice_speed">Voice Speed</string>
     <style name="Theme.PranaApp" parent="android:Theme.Material.Light.NoActionBar"/>

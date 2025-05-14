@@ -20,7 +20,7 @@ class TextToSpeechManager private constructor(context: Context) {
                     Log.e(TAG, "Language not supported")
                 } else {
                     // Set male voice if available
-                    setMaleVoice()
+                    //setMaleVoice()
                     isInitialized = true
                     textToSpeech?.setSpeechRate(speechSpeed)
                     Log.d(TAG, "TextToSpeech initialized successfully")

@@ -77,9 +77,14 @@ color common_google_signin_btn_text_light_disabled
 color common_google_signin_btn_text_light_focused
 color common_google_signin_btn_text_light_pressed
 color common_google_signin_btn_tint
+color dark_background
+color dark_surface
 color ic_launcher_background
 color notification_action_color_filter
 color notification_icon_bg_color
+color teal_primary
+color teal_secondary
+color teal_tertiary
 color vector_tint_color
 color vector_tint_theme_color
 dimen browser_actions_context_menu_max_width
@@ -106,6 +111,7 @@ dimen notification_small_icon_size_as_large
 dimen notification_subtext_size
 dimen notification_top_pad
 dimen notification_top_pad_large_text
+drawable circular_timer_background
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -125,8 +131,12 @@ drawable common_google_signin_btn_text_light
 drawable common_google_signin_btn_text_light_focused
 drawable common_google_signin_btn_text_light_normal
 drawable common_google_signin_btn_text_light_normal_background
+drawable diamond_center
+drawable exhale_icon
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
+drawable gradient_button_background
+drawable hold_icon
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
@@ -136,6 +146,7 @@ drawable ic_call_decline_low
 drawable ic_launcher_foreground
 drawable ic_notification
 drawable ic_peace_notification
+drawable inhale_icon
 drawable notification_action_background
 drawable notification_bg
 drawable notification_bg_low
@@ -149,6 +160,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable silence_icon
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
 id accessibility_custom_action_1
@@ -286,9 +298,11 @@ layout notification_template_part_time
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw firebase_common_keep
+raw ocean_waves
 string androidx_startup
 string app_name
 string base_count
+string base_count_label
 string breathing_cycles
 string breathing_settings
 string breathing_timer
@@ -319,6 +333,7 @@ string common_google_play_services_wear_update_text
 string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
+string configure_ui
 string confirm_password
 string copy_toast_msg
 string current_count
@@ -429,6 +444,7 @@ string selected
 string silence
 string slow
 string start
+string start_practice
 string state_empty
 string state_off
 string state_on
@@ -439,6 +455,8 @@ string tab
 string template_percent
 string tooltip_description
 string tooltip_label
+string tour
+string voice_cycle
 string voice_guidance
 string voice_speed
 style DialogWindowTheme

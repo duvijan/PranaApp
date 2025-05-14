@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.duvijan.pranaapp-mergeDebugResources-67:/values-v23/values-v23.xml",
+            "outputFile": "com.duvijan.pranaapp-mergeDebugResources-68:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\duvij\\.gradle\\caches\\8.14\\transforms\\3acbb4fcfbb8b4b06a9fff167166c99e\\transformed\\work-runtime-2.8.1\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\srudr\\.gradle\\caches\\8.14\\transforms\\2c47b7fce6a21c4a0e78be00fcacc40a\\transformed\\work-runtime-2.8.1\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",
