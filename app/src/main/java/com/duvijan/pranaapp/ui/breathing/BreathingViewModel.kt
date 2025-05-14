@@ -183,20 +183,25 @@ class BreathingViewModel : ViewModel() {
     private fun startVoiceCounting() {
         countingJob = viewModelScope.launch {
             while (_isRunning.value && System.currentTimeMillis() < endTime) {
-                // Announce the breathing phase first
-                val phaseAnnouncement = when (_currentStage.value) {
-                    BreathingStage.INHALE -> "Inhale"
-                    BreathingStage.HOLD -> "Hold"
-                    BreathingStage.EXHALE -> "Exhale"
-                    BreathingStage.SILENCE -> "Silence"
+                // Use a single rhythmic command sequence for the entire breathing cycle
+                when (_currentStage.value) {
+                    BreathingStage.INHALE -> {
+                        // Speak with a gentle, peaceful tone
+                        ttsManager?.speak("Inhale... slowly and deeply")
+                    }
+                    BreathingStage.HOLD -> {
+                        // Peaceful hold instruction
+                        ttsManager?.speak("Hold... feel the stillness")
+                    }
+                    BreathingStage.EXHALE -> {
+                        // Calming exhale instruction
+                        ttsManager?.speak("Exhale... release tension")
+                    }
+                    BreathingStage.SILENCE -> {
+                        // Peaceful silence instruction
+                        ttsManager?.speak("Silence... be present")
+                    }
                 }
-                ttsManager?.speak(phaseAnnouncement)
-                
-                // Short delay after announcing the phase
-                delay(500)
-                
-                // Then speak the count
-                ttsManager?.speak(_currentCount.value.toString())
                 
                 // Calculate delay based on current stage duration
                 val stageDuration = when (_currentStage.value) {
@@ -206,15 +211,16 @@ class BreathingViewModel : ViewModel() {
                     BreathingStage.SILENCE -> _silenceDuration.value.toIntOrNull() ?: 4
                 }
                 
-                // Calculate delay based on counts per stage
-                val countsPerStage = baseCount
-                val delayMillis = (stageDuration * 1000) / countsPerStage
+                // Wait for the full duration of the stage minus the time it takes to speak
+                val speakingTimeEstimate = 1500L // estimated time in ms for TTS to complete
+                val waitTime = (stageDuration * 1000) - speakingTimeEstimate
                 
-                delay(delayMillis.toLong())
+                if (waitTime > 0) {
+                    delay(waitTime)
+                }
                 
-                _currentCount.value += 1
-                if (_currentCount.value > _totalCountInCycle.value) {
-                    _currentCount.value = 1
+                // Update cycle count when completing a full cycle
+                if (_currentStage.value == BreathingStage.SILENCE) {
                     _cycleCount.value += 1
                     
                     // Check if we've completed all cycles

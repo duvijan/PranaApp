@@ -16,10 +16,10 @@ class AudioManager private constructor(private val context: Context) {
     
     private fun initializeMediaPlayer() {
         try {
-            mediaPlayer = MediaPlayer.create(context, R.raw.ocean_waves)
+            mediaPlayer = MediaPlayer.create(context, R.raw.calming_flute)
             mediaPlayer?.isLooping = true
             mediaPlayer?.setVolume(volume, volume)
-            Log.d(TAG, "MediaPlayer initialized successfully")
+            Log.d(TAG, "MediaPlayer initialized successfully with calming flute sound")
         } catch (e: Exception) {
             Log.e(TAG, "Error initializing MediaPlayer: ${e.message}")
         }

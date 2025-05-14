@@ -95,7 +95,7 @@ fun BreathingScreen(
                 
                 // Center - App name or current screen title
                 Text(
-                    text = if (isRunning) "Timing" else "Sence",
+                    text = if (isRunning) "Timing" else "PranaApp",
                     style = MaterialTheme.typography.headlineMedium,
                     color = Color.White
                 )
