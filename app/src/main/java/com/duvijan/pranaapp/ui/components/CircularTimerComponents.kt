@@ -5,6 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeDown
+import androidx.compose.material.icons.filled.VolumeUp
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
@@ -240,6 +244,55 @@ fun GradientButton(
             color = Color.White,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
+@Composable
+fun BackgroundSoundSlider(
+    value: Float,
+    onValueChange: (Float) -> Unit
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "Background Sound",
+            color = Color.White,
+            fontSize = 14.sp
+        )
+        
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.VolumeDown,
+                contentDescription = "Volume Low",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+            
+            Slider(
+                value = value,
+                onValueChange = onValueChange,
+                colors = SliderDefaults.colors(
+                    thumbColor = Color(0xFF4AEDB6),
+                    activeTrackColor = Color(0xFF4AEDB6),
+                    inactiveTrackColor = Color.Gray
+                ),
+                modifier = Modifier.weight(1f)
+            )
+            
+            Icon(
+                imageVector = Icons.Default.VolumeUp,
+                contentDescription = "Volume High",
+                tint = Color.White,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    }
+}
+
             fontSize = 16.sp
         )
     }

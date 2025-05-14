@@ -8,6 +8,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.VolumeDown
+import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,6 +25,7 @@ import com.duvijan.pranaapp.ui.components.CircularTimer
 import com.duvijan.pranaapp.ui.components.BreathingPhaseIndicator
 import com.duvijan.pranaapp.ui.components.VoiceControlSlider
 import com.duvijan.pranaapp.ui.components.GradientButton
+import com.duvijan.pranaapp.ui.components.BackgroundSoundSlider
 
 @Composable
 fun BreathingScreen(
@@ -54,6 +58,9 @@ fun BreathingScreen(
     
     // Voice control value
     var voiceControlValue by remember { mutableStateOf(0.5f) }
+    
+    // Background sound value
+    var backgroundSoundValue by remember { mutableStateOf(0.5f) }
     
     // Initialize TTS when the screen is created
     LaunchedEffect(Unit) {
@@ -140,6 +147,17 @@ fun BreathingScreen(
                     onValueChange = { 
                         voiceControlValue = it 
                         viewModel.setVoiceSpeed(0.5f + it)
+                    }
+                )
+                
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Background sound slider
+                BackgroundSoundSlider(
+                    value = backgroundSoundValue,
+                    onValueChange = { 
+                        backgroundSoundValue = it
+                        viewModel.setBackgroundSoundVolume(it)
                     }
                 )
                 
@@ -254,12 +272,13 @@ fun DurationInput(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(
+                focusedTextColor = Color.White,
+                unfocusedTextColor = Color.White,
+                cursorColor = Color(0xFF4AEDB6),
                 focusedBorderColor = Color(0xFF4AEDB6),
                 unfocusedBorderColor = Color.Gray,
                 focusedLabelColor = Color(0xFF4AEDB6),
-                unfocusedLabelColor = Color.Gray,
-                cursorColor = Color(0xFF4AEDB6),
-                textColor = Color.White
+                unfocusedLabelColor = Color.Gray
             ),
             modifier = Modifier.fillMaxWidth()
         )

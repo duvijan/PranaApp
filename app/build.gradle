@@ -7,7 +7,7 @@ plugins {
 
 android {
     namespace 'com.duvijan.pranaapp'
-    compileSdk 35
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.duvijan.pranaapp"

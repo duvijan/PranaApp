@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duvijan.pranaapp.model.BreathingStage
 import com.duvijan.pranaapp.util.AnalyticsManager
+import com.duvijan.pranaapp.util.AudioManager
 import com.duvijan.pranaapp.util.TextToSpeechManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -56,6 +57,7 @@ class BreathingViewModel : ViewModel() {
     
     // TTS and settings
     private var ttsManager: TextToSpeechManager? = null
+    private var audioManager: AudioManager? = null
     private var baseCount = 5
     private var breathingCycles = 3
     private var practiceDuration = 10
@@ -64,6 +66,7 @@ class BreathingViewModel : ViewModel() {
     
     fun initializeTTS(context: Context) {
         ttsManager = TextToSpeechManager.getInstance(context)
+        audioManager = AudioManager.getInstance(context)
         loadSettings(context)
     }
     
@@ -111,11 +114,17 @@ class BreathingViewModel : ViewModel() {
         ttsManager?.setSpeechRate(speed)
     }
     
+    fun setBackgroundSoundVolume(volume: Float) {
+        audioManager?.setVolume(volume)
+    }
+    
     fun toggleTimer() {
         if (_isRunning.value) {
             stopTimer()
+            audioManager?.pauseBackgroundSound()
         } else {
             startTimer()
+            audioManager?.startBackgroundSound()
         }
     }
     
@@ -174,6 +183,19 @@ class BreathingViewModel : ViewModel() {
     private fun startVoiceCounting() {
         countingJob = viewModelScope.launch {
             while (_isRunning.value && System.currentTimeMillis() < endTime) {
+                // Announce the breathing phase first
+                val phaseAnnouncement = when (_currentStage.value) {
+                    BreathingStage.INHALE -> "Inhale"
+                    BreathingStage.HOLD -> "Hold"
+                    BreathingStage.EXHALE -> "Exhale"
+                    BreathingStage.SILENCE -> "Silence"
+                }
+                ttsManager?.speak(phaseAnnouncement)
+                
+                // Short delay after announcing the phase
+                delay(500)
+                
+                // Then speak the count
                 ttsManager?.speak(_currentCount.value.toString())
                 
                 // Calculate delay based on current stage duration
@@ -246,5 +268,6 @@ class BreathingViewModel : ViewModel() {
         countingJob?.cancel()
         ttsManager = null
         TextToSpeechManager.releaseInstance()
+        AudioManager.releaseInstance()
     }
 }
