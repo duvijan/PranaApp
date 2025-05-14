@@ -244,6 +244,11 @@ fun GradientButton(
             color = Color.White,
             fontWeight = FontWeight.Bold,
             textAlign = TextAlign.Center,
+            fontSize = 16.sp
+        )
+    }
+}
+
 @Composable
 fun BackgroundSoundSlider(
     value: Float,
@@ -290,11 +295,6 @@ fun BackgroundSoundSlider(
                 modifier = Modifier.size(24.dp)
             )
         }
-    }
-}
-
-            fontSize = 16.sp
-        )
     }
 }
 
