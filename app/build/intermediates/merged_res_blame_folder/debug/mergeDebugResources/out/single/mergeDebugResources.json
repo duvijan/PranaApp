@@ -1,62 +1,94 @@
 [
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xxhdpi/ic_launcher.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_inhale_icon.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/inhale_icon.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xxxhdpi/ic_launcher.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xxxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/drawable_ic_notification.xml.flat",
-        "source": "com.duvijan.pranaapp-main-71:/drawable/ic_notification.xml"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_silence_icon.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/silence_icon.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-mdpi_ic_launcher_round.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-mdpi/ic_launcher_round.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_gradient_button_background.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/gradient_button_background.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xxxhdpi/ic_launcher_round.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-hdpi_ic_launcher.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-hdpi/ic_launcher.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/raw_ocean_waves.mp3.flat",
+        "source": "com.duvijan.pranaapp-main-72:/raw/ocean_waves.mp3"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-mdpi_ic_launcher.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-mdpi/ic_launcher.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xhdpi_ic_launcher_round.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xhdpi/ic_launcher_round.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xxhdpi_ic_launcher_round.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xxhdpi/ic_launcher_round.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_ic_notification.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/ic_notification.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-hdpi_ic_launcher_round.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-hdpi/ic_launcher_round.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_diamond_center.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/diamond_center.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/drawable_ic_peace_notification.xml.flat",
-        "source": "com.duvijan.pranaapp-main-71:/drawable/ic_peace_notification.xml"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-mdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.duvijan.pranaapp-main-71:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xxhdpi/ic_launcher.png"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-xhdpi/ic_launcher.png"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
-        "merged": "com.duvijan.pranaapp-debug-69:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.duvijan.pranaapp-main-71:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xhdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_hold_icon.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/hold_icon.xml"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_exhale_icon.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/exhale_icon.xml"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "com.duvijan.pranaapp-main-72:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_circular_timer_background.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/circular_timer_background.xml"
+    },
+    {
+        "merged": "com.duvijan.pranaapp-debug-70:/drawable_ic_peace_notification.xml.flat",
+        "source": "com.duvijan.pranaapp-main-72:/drawable/ic_peace_notification.xml"
     }
 ]

@@ -49,4 +49,11 @@
     <string name="join_peace_movement">Join Peace Movement</string>
     <string name="peace_movement_thanks">Thank you for joining the Peace Movement!</string>
     <string name="peace_movement_count">%1$d peacekeepers have joined</string>
+    
+    <!-- New UI Strings -->
+    <string name="start_practice">START PRACTICE</string>
+    <string name="configure_ui">CONFIGURE UI</string>
+    <string name="voice_cycle">Voice cycle</string>
+    <string name="base_count_label">BASE COUNT</string>
+    <string name="tour">TOUR</string>
 </resources>

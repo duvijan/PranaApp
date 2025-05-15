@@ -16,11 +16,11 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF81C784),
-    secondary = Color(0xFF4CAF50),
-    tertiary = Color(0xFF388E3C),
-    background = Color(0xFF121212),
-    surface = Color(0xFF1E1E1E),
+    primary = Color(0xFF4AEDB6),     // Teal accent from mockup
+    secondary = Color(0xFF2CCFB0),   // Darker teal for secondary elements
+    tertiary = Color(0xFF73F4D6),    // Lighter teal for tertiary elements
+    background = Color(0xFF121212),  // Dark background (almost black)
+    surface = Color(0xFF1E1E1E),     // Slightly lighter surface color
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,

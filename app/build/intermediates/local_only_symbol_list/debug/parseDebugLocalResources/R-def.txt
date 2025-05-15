@@ -1,16 +1,31 @@
 R_DEF: Internal format may change without notice
 local
+color dark_background
+color dark_surface
 color ic_launcher_background
+color teal_primary
+color teal_secondary
+color teal_tertiary
+drawable circular_timer_background
+drawable diamond_center
+drawable exhale_icon
+drawable gradient_button_background
+drawable hold_icon
 drawable ic_launcher_foreground
 drawable ic_notification
 drawable ic_peace_notification
+drawable inhale_icon
+drawable silence_icon
 mipmap ic_launcher
 mipmap ic_launcher_round
+raw ocean_waves
 string app_name
 string base_count
+string base_count_label
 string breathing_cycles
 string breathing_settings
 string breathing_timer
+string configure_ui
 string confirm_password
 string current_count
 string current_stage
@@ -51,7 +66,10 @@ string save_settings
 string silence
 string slow
 string start
+string start_practice
 string stop
+string tour
+string voice_cycle
 string voice_guidance
 string voice_speed
 style Theme.PranaApp

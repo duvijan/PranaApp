@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.duvijan.pranaapp.model.BreathingStage
 import com.duvijan.pranaapp.util.AnalyticsManager
+import com.duvijan.pranaapp.util.AudioManager
+import com.duvijan.pranaapp.util.CustomVoiceManager
 import com.duvijan.pranaapp.util.TextToSpeechManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -56,6 +58,8 @@ class BreathingViewModel : ViewModel() {
     
     // TTS and settings
     private var ttsManager: TextToSpeechManager? = null
+    private var audioManager: AudioManager? = null
+    private var customVoiceManager: CustomVoiceManager? = null
     private var baseCount = 5
     private var breathingCycles = 3
     private var practiceDuration = 10
@@ -64,6 +68,8 @@ class BreathingViewModel : ViewModel() {
     
     fun initializeTTS(context: Context) {
         ttsManager = TextToSpeechManager.getInstance(context)
+        audioManager = AudioManager.getInstance(context)
+        customVoiceManager = CustomVoiceManager.getInstance(context)
         loadSettings(context)
     }
     
@@ -106,11 +112,22 @@ class BreathingViewModel : ViewModel() {
         }
     }
     
+    fun setVoiceSpeed(speed: Float) {
+        voiceSpeed = speed
+        ttsManager?.setSpeechRate(speed)
+    }
+    
+    fun setBackgroundSoundVolume(volume: Float) {
+        audioManager?.setVolume(volume)
+    }
+    
     fun toggleTimer() {
         if (_isRunning.value) {
             stopTimer()
+            audioManager?.pauseBackgroundSound()
         } else {
             startTimer()
+            audioManager?.startBackgroundSound()
         }
     }
     
@@ -169,9 +186,7 @@ class BreathingViewModel : ViewModel() {
     private fun startVoiceCounting() {
         countingJob = viewModelScope.launch {
             while (_isRunning.value && System.currentTimeMillis() < endTime) {
-                ttsManager?.speak(_currentCount.value.toString())
-                
-                // Calculate delay based on current stage duration
+                // Get current stage duration
                 val stageDuration = when (_currentStage.value) {
                     BreathingStage.INHALE -> _inhaleDuration.value.toIntOrNull() ?: 4
                     BreathingStage.HOLD -> _holdDuration.value.toIntOrNull() ?: 4
@@ -179,15 +194,61 @@ class BreathingViewModel : ViewModel() {
                     BreathingStage.SILENCE -> _silenceDuration.value.toIntOrNull() ?: 4
                 }
                 
-                // Calculate delay based on counts per stage
-                val countsPerStage = baseCount
-                val delayMillis = (stageDuration * 1000) / countsPerStage
+                // Announce the breathing phase using Mahan's voice
+                when (_currentStage.value) {
+                    BreathingStage.INHALE -> {
+                        customVoiceManager?.playPhaseAnnouncement("inhale")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Inhale")
+                    }
+                    BreathingStage.HOLD -> {
+                        customVoiceManager?.playPhaseAnnouncement("hold")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Hold")
+                    }
+                    BreathingStage.EXHALE -> {
+                        customVoiceManager?.playPhaseAnnouncement("exhale")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Exhale")
+                    }
+                    BreathingStage.SILENCE -> {
+                        customVoiceManager?.playPhaseAnnouncement("silence")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Silence")
+                    }
+                }
                 
-                delay(delayMillis.toLong())
+                // Wait a moment after announcing the phase
+                delay(1000)
                 
-                _currentCount.value += 1
-                if (_currentCount.value > _totalCountInCycle.value) {
-                    _currentCount.value = 1
+                // Count numbers using Mahan's voice recordings
+                // Determine how many numbers to count based on stage duration
+                val countTo = minOf(stageDuration, 10) // Limit to available recordings (1-10)
+                
+                if (countTo > 1) {
+                    // Calculate delay between numbers to evenly distribute them across the stage duration
+                    val countDelay = ((stageDuration * 1000) - 2000) / (countTo - 1).toLong()
+                    
+                    // Perform sequential counting with Mahan's voice
+                    for (i in 1..countTo) {
+                        customVoiceManager?.playNumber(i)
+                        if (i < countTo) {
+                            delay(countDelay)
+                        }
+                    }
+                } else if (countTo == 1) {
+                    // Just play the single number
+                    customVoiceManager?.playNumber(1)
+                }
+                
+                // Wait until stage completion (minus a small buffer to prepare for next stage)
+                val waitTime = (stageDuration * 1000) - 500 - 1000 - (countTo * 500) // Adjust for phase announcement and counting
+                if (waitTime > 0) {
+                    delay(waitTime)
+                }
+                
+                // Update cycle count when completing a full cycle
+                if (_currentStage.value == BreathingStage.SILENCE) {
                     _cycleCount.value += 1
                     
                     // Check if we've completed all cycles
@@ -241,5 +302,9 @@ class BreathingViewModel : ViewModel() {
         countingJob?.cancel()
         ttsManager = null
         TextToSpeechManager.releaseInstance()
+        audioManager = null
+        AudioManager.releaseInstance()
+        customVoiceManager = null
+        CustomVoiceManager.releaseInstance()
     }
 }
