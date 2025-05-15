@@ -80,7 +80,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.9.0'
     
     // FFmpeg for Android (for audio processing)
-    implementation 'com.arthenica:mobile-ffmpeg-full:4.4.LTS'
+    implementation 'nl.bravobit:android-ffmpeg:1.1.7'
     
     // WorkManager for scheduling
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
