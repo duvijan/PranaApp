@@ -1,5 +1,6 @@
 package com.duvijan.pranaapp
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,8 +20,10 @@ import com.duvijan.pranaapp.ui.breathing.BreathingSettingsScreen
 import com.duvijan.pranaapp.ui.peace.PeaceMovementScreen
 import com.duvijan.pranaapp.ui.theme.PranaAppTheme
 import com.duvijan.pranaapp.util.AnalyticsManager
+import com.duvijan.pranaapp.util.AudioExtractor
 import com.duvijan.pranaapp.util.PeaceMeditationWorker
 import com.google.firebase.auth.FirebaseAuth
+import java.io.File
 
 class MainActivity : ComponentActivity() {
     private lateinit var auth: FirebaseAuth
@@ -35,6 +38,9 @@ class MainActivity : ComponentActivity() {
         val fromPeaceMeditation = intent.getBooleanExtra(
             PeaceMeditationWorker.PEACE_MEDITATION_EXTRA, false
         )
+        
+        // Process audio files for voice guidance
+        processAudioFiles()
         
         setContent {
             PranaAppTheme {
@@ -62,6 +68,29 @@ class MainActivity : ComponentActivity() {
             auth.currentUser != null -> "breathing"
             // Otherwise, go to login screen
             else -> "login"
+        }
+    }
+    
+    private fun processAudioFiles() {
+        val sharedPreferences = getSharedPreferences("pranaapp_prefs", Context.MODE_PRIVATE)
+        val audioProcessed = sharedPreferences.getBoolean("audio_processed", false)
+        
+        if (!audioProcessed) {
+            // Copy Mahan.m4a to app's files directory
+            val tempFile = File(filesDir, "mahan_voice.m4a")
+            
+            // Create a utility to copy the file from raw resources to app's files directory
+            // For development purposes, we would have a temporary resource in raw
+            val copySuccess = AudioExtractor.copyRawResourceToFile(this, R.raw.temp_mahan_voice, tempFile)
+            
+            if (copySuccess) {
+                // Extract audio segments using FFmpeg
+                val outputDir = File(filesDir, "voice_audio")
+                AudioExtractor.extractAudioFromRawResource(this, tempFile, outputDir) {
+                    // Mark audio as processed
+                    sharedPreferences.edit().putBoolean("audio_processed", true).apply()
+                }
+            }
         }
     }
 }

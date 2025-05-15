@@ -79,6 +79,9 @@ dependencies {
     // TextToSpeech dependencies
     implementation 'androidx.lifecycle:lifecycle-runtime-compose:2.9.0'
     
+    // FFmpeg for Android (for audio processing)
+    implementation 'com.arthenica:mobile-ffmpeg-full:4.4.LTS'
+    
     // WorkManager for scheduling
     implementation 'androidx.work:work-runtime-ktx:2.8.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'

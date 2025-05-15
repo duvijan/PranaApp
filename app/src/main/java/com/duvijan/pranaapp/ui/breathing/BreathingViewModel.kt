@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.duvijan.pranaapp.model.BreathingStage
 import com.duvijan.pranaapp.util.AnalyticsManager
 import com.duvijan.pranaapp.util.AudioManager
+import com.duvijan.pranaapp.util.CustomVoiceManager
 import com.duvijan.pranaapp.util.TextToSpeechManager
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -58,6 +59,7 @@ class BreathingViewModel : ViewModel() {
     // TTS and settings
     private var ttsManager: TextToSpeechManager? = null
     private var audioManager: AudioManager? = null
+    private var customVoiceManager: CustomVoiceManager? = null
     private var baseCount = 5
     private var breathingCycles = 3
     private var practiceDuration = 10
@@ -67,6 +69,7 @@ class BreathingViewModel : ViewModel() {
     fun initializeTTS(context: Context) {
         ttsManager = TextToSpeechManager.getInstance(context)
         audioManager = AudioManager.getInstance(context)
+        customVoiceManager = CustomVoiceManager.getInstance(context)
         loadSettings(context)
     }
     
@@ -183,27 +186,7 @@ class BreathingViewModel : ViewModel() {
     private fun startVoiceCounting() {
         countingJob = viewModelScope.launch {
             while (_isRunning.value && System.currentTimeMillis() < endTime) {
-                // Use a single rhythmic command sequence for the entire breathing cycle
-                when (_currentStage.value) {
-                    BreathingStage.INHALE -> {
-                        // Speak with a gentle, peaceful tone
-                        ttsManager?.speak("Inhale... slowly and deeply")
-                    }
-                    BreathingStage.HOLD -> {
-                        // Peaceful hold instruction
-                        ttsManager?.speak("Hold... feel the stillness")
-                    }
-                    BreathingStage.EXHALE -> {
-                        // Calming exhale instruction
-                        ttsManager?.speak("Exhale... release tension")
-                    }
-                    BreathingStage.SILENCE -> {
-                        // Peaceful silence instruction
-                        ttsManager?.speak("Silence... be present")
-                    }
-                }
-                
-                // Calculate delay based on current stage duration
+                // Get current stage duration
                 val stageDuration = when (_currentStage.value) {
                     BreathingStage.INHALE -> _inhaleDuration.value.toIntOrNull() ?: 4
                     BreathingStage.HOLD -> _holdDuration.value.toIntOrNull() ?: 4
@@ -211,10 +194,55 @@ class BreathingViewModel : ViewModel() {
                     BreathingStage.SILENCE -> _silenceDuration.value.toIntOrNull() ?: 4
                 }
                 
-                // Wait for the full duration of the stage minus the time it takes to speak
-                val speakingTimeEstimate = 1500L // estimated time in ms for TTS to complete
-                val waitTime = (stageDuration * 1000) - speakingTimeEstimate
+                // Announce the breathing phase using Mahan's voice
+                when (_currentStage.value) {
+                    BreathingStage.INHALE -> {
+                        customVoiceManager?.playPhaseAnnouncement("inhale")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Inhale")
+                    }
+                    BreathingStage.HOLD -> {
+                        customVoiceManager?.playPhaseAnnouncement("hold")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Hold")
+                    }
+                    BreathingStage.EXHALE -> {
+                        customVoiceManager?.playPhaseAnnouncement("exhale")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Exhale")
+                    }
+                    BreathingStage.SILENCE -> {
+                        customVoiceManager?.playPhaseAnnouncement("silence")
+                        // Fallback to TTS if custom voice fails
+                        ttsManager?.speak("Silence")
+                    }
+                }
                 
+                // Wait a moment after announcing the phase
+                delay(1000)
+                
+                // Count numbers using Mahan's voice recordings
+                // Determine how many numbers to count based on stage duration
+                val countTo = minOf(stageDuration, 10) // Limit to available recordings (1-10)
+                
+                if (countTo > 1) {
+                    // Calculate delay between numbers to evenly distribute them across the stage duration
+                    val countDelay = ((stageDuration * 1000) - 2000) / (countTo - 1).toLong()
+                    
+                    // Perform sequential counting with Mahan's voice
+                    for (i in 1..countTo) {
+                        customVoiceManager?.playNumber(i)
+                        if (i < countTo) {
+                            delay(countDelay)
+                        }
+                    }
+                } else if (countTo == 1) {
+                    // Just play the single number
+                    customVoiceManager?.playNumber(1)
+                }
+                
+                // Wait until stage completion (minus a small buffer to prepare for next stage)
+                val waitTime = (stageDuration * 1000) - 500 - 1000 - (countTo * 500) // Adjust for phase announcement and counting
                 if (waitTime > 0) {
                     delay(waitTime)
                 }
@@ -274,6 +302,9 @@ class BreathingViewModel : ViewModel() {
         countingJob?.cancel()
         ttsManager = null
         TextToSpeechManager.releaseInstance()
+        audioManager = null
         AudioManager.releaseInstance()
+        customVoiceManager = null
+        CustomVoiceManager.releaseInstance()
     }
 }
