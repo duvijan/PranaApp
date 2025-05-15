@@ -2,9 +2,9 @@ package com.duvijan.pranaapp.util
 
 import android.content.Context
 import android.util.Log
-import nl.bravobit.android.ffmpeg.FFmpeg
-import nl.bravobit.android.ffmpeg.FFcommand
-import nl.bravobit.android.ffmpeg.FFtask
+import com.arthenica.ffmpegkit.FFmpegKit
+import com.arthenica.ffmpegkit.FFmpegKitConfig
+import com.arthenica.ffmpegkit.ReturnCode
 import java.io.File
 import java.io.FileOutputStream
 
@@ -14,24 +14,14 @@ class AudioExtractor {
         
         fun extractAudioFromRawResource(context: Context, sourceFile: File, outputDir: File, complete: () -> Unit) {
             try {
-                // Check if FFmpeg is supported
-                if (!FFmpeg.getInstance(context).isSupported) {
-                    Log.e(TAG, "FFmpeg not supported")
-                    complete()
-                    return
-                }
-                
                 // Create output directory if it doesn't exist
                 if (!outputDir.exists()) {
                     outputDir.mkdirs()
                 }
                 
-                // Get FFmpeg instance
-                val ffmpeg = FFmpeg.getInstance(context)
-                
                 // Process audio files sequentially
-                processNumberRecordings(ffmpeg, sourceFile, outputDir) {
-                    processPhaseAnnouncements(ffmpeg, sourceFile, outputDir) {
+                processNumberRecordings(sourceFile, outputDir) {
+                    processPhaseAnnouncements(sourceFile, outputDir) {
                         complete()
                     }
                 }
@@ -41,11 +31,11 @@ class AudioExtractor {
             }
         }
         
-        private fun processNumberRecordings(ffmpeg: FFmpeg, sourceFile: File, outputDir: File, onComplete: () -> Unit) {
-            processNextNumber(ffmpeg, sourceFile, outputDir, 1, onComplete)
+        private fun processNumberRecordings(sourceFile: File, outputDir: File, onComplete: () -> Unit) {
+            processNextNumber(sourceFile, outputDir, 1, onComplete)
         }
         
-        private fun processNextNumber(ffmpeg: FFmpeg, sourceFile: File, outputDir: File, currentNumber: Int, onComplete: () -> Unit) {
+        private fun processNextNumber(sourceFile: File, outputDir: File, currentNumber: Int, onComplete: () -> Unit) {
             if (currentNumber > 10) {
                 onComplete()
                 return
@@ -55,22 +45,20 @@ class AudioExtractor {
             val startTime = (currentNumber - 1).toString()
             val endTime = currentNumber.toString()
             
-            val command = arrayOf("-i", sourceFile.absolutePath, "-ss", startTime, "-to", endTime, "-c", "copy", outputFile.absolutePath)
+            val command = "-i ${sourceFile.absolutePath} -ss $startTime -to $endTime -c copy ${outputFile.absolutePath}"
             
-            ffmpeg.execute(command, object : FFcommand.ExecuteBinaryResponseHandler() {
-                override fun onSuccess(message: String?) {
+            FFmpegKit.executeAsync(command, { session ->
+                if (ReturnCode.isSuccess(session.returnCode)) {
                     Log.d(TAG, "Successfully extracted number $currentNumber audio")
-                    processNextNumber(ffmpeg, sourceFile, outputDir, currentNumber + 1, onComplete)
+                    processNextNumber(sourceFile, outputDir, currentNumber + 1, onComplete)
+                } else {
+                    Log.e(TAG, "Failed to extract number $currentNumber audio: ${session.allLogsAsString}")
+                    processNextNumber(sourceFile, outputDir, currentNumber + 1, onComplete)
                 }
-                
-                override fun onFailure(message: String?) {
-                    Log.e(TAG, "Failed to extract number $currentNumber audio: $message")
-                    processNextNumber(ffmpeg, sourceFile, outputDir, currentNumber + 1, onComplete)
-                }
-            })
+            }, null, null)
         }
         
-        private fun processPhaseAnnouncements(ffmpeg: FFmpeg, sourceFile: File, outputDir: File, onComplete: () -> Unit) {
+        private fun processPhaseAnnouncements(sourceFile: File, outputDir: File, onComplete: () -> Unit) {
             val phases = listOf(
                 Triple("inhale", 10, 12),
                 Triple("hold", 12, 14),
@@ -78,10 +66,10 @@ class AudioExtractor {
                 Triple("silence", 16, 18)
             )
             
-            processNextPhase(ffmpeg, sourceFile, outputDir, phases, 0, onComplete)
+            processNextPhase(sourceFile, outputDir, phases, 0, onComplete)
         }
         
-        private fun processNextPhase(ffmpeg: FFmpeg, sourceFile: File, outputDir: File, phases: List<Triple<String, Int, Int>>, index: Int, onComplete: () -> Unit) {
+        private fun processNextPhase(sourceFile: File, outputDir: File, phases: List<Triple<String, Int, Int>>, index: Int, onComplete: () -> Unit) {
             if (index >= phases.size) {
                 onComplete()
                 return
@@ -90,19 +78,17 @@ class AudioExtractor {
             val (phase, startTime, endTime) = phases[index]
             val outputFile = File(outputDir, "${phase}_voice.mp3")
             
-            val command = arrayOf("-i", sourceFile.absolutePath, "-ss", startTime.toString(), "-to", endTime.toString(), "-c", "copy", outputFile.absolutePath)
+            val command = "-i ${sourceFile.absolutePath} -ss $startTime -to $endTime -c copy ${outputFile.absolutePath}"
             
-            ffmpeg.execute(command, object : FFcommand.ExecuteBinaryResponseHandler() {
-                override fun onSuccess(message: String?) {
+            FFmpegKit.executeAsync(command, { session ->
+                if (ReturnCode.isSuccess(session.returnCode)) {
                     Log.d(TAG, "Successfully extracted $phase audio")
-                    processNextPhase(ffmpeg, sourceFile, outputDir, phases, index + 1, onComplete)
+                    processNextPhase(sourceFile, outputDir, phases, index + 1, onComplete)
+                } else {
+                    Log.e(TAG, "Failed to extract $phase audio: ${session.allLogsAsString}")
+                    processNextPhase(sourceFile, outputDir, phases, index + 1, onComplete)
                 }
-                
-                override fun onFailure(message: String?) {
-                    Log.e(TAG, "Failed to extract $phase audio: $message")
-                    processNextPhase(ffmpeg, sourceFile, outputDir, phases, index + 1, onComplete)
-                }
-            })
+            }, null, null)
         }
         
         fun copyRawResourceToFile(context: Context, resourceId: Int, outputFile: File): Boolean {
